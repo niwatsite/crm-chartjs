@@ -1,0 +1,28 @@
+{
+	"settings": {
+		"emmet.syntaxProfiles": {
+			"vue-html": "html",
+			"vue": "html"
+		},
+		"emmet.includeLanguages": {
+			"vue-html": "html",
+			"vue": "html"
+		},
+		"eslint.probe": [
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+			"html",
+			"vue",
+			"markdown",
+			"scss"
+		],
+		"editor.formatOnSave": true
+	},
+	"folders": [
+		{
+			"path": "."
+		}
+	]
+}
