@@ -2,7 +2,17 @@
   <div id="app">
     <p class="title">Chart.jS Vue</p>
     <p>
-      <canvas id="graph" width="1024" height="350"></canvas>
+      <canvas ref="graph" id="graph" width="1024" height="350"></canvas>
+    </p>
+    <p>
+      <a
+        id="download"
+        @click="download"
+        download="ChartImage.jpg"
+        title="Descargar Gráfico"
+      >
+        Download
+      </a>
     </p>
   </div>
 </template>
@@ -12,8 +22,8 @@ import Chart from "chart.js";
 export default {
   components: {},
   mounted: () => {
-    var ctx = document.getElementById("graph").getContext("2d");
-    var myChart = new Chart(ctx, {
+    const ctx = document.getElementById("graph").getContext("2d");
+    const myChart = new Chart(ctx, {
       type: "bar",
       data: {
         labels: [
@@ -39,26 +49,21 @@ export default {
           {
             label: "Email",
             backgroundColor: "#7C6BF7",
-            data: [20, 59, 5, 56, 58, 12, 59, 85, 23, 24, 5, 6]
+            data: [20, 30, 5, 56, 58, 12, 59, 85, 23, 24, 5, 6]
           },
           {
             label: "Meeting",
             backgroundColor: "#5847D7",
-            data: [35, 59, 5, 56, 58, 12, 59, 65, 51, 2, 59, 6]
+            data: [35, 35, 5, 56, 58, 12, 59, 65, 51, 2, 59, 6]
           }
         ]
       },
       options: {
-        // tooltips: {
-        //   mode: "index",
-        //   intersect: false,
-        // },
         tooltips: {
           mode: "label",
-          backgroundColor:"rgb(255,255,255)",
-          titleFontColor:"#7C818D",
-          bodyFontColor:"#272E39",
-          footerFontColor:"#272E39",
+          backgroundColor: "rgb(255,255,255)",
+          titleFontColor: "#7C818D",
+          bodyFontColor: "#272E39",
           callbacks: {
             afterTitle: () => (window.total = 0),
             label: (tooltipItem, data) => {
@@ -71,10 +76,10 @@ export default {
                 ": " +
                 valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
               );
-            },
-            footer: () =>
-              "Total: " +
-              window.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+            }
+            // afterTitle: () =>
+            //   "Total: " +
+            //   window.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
           }
         },
         scales: {
@@ -114,7 +119,49 @@ export default {
     console.log(myChart);
   },
   data() {
-    return {};
+    return {
+      item: [
+        {
+          name: "Oui",
+          items: [
+            {
+              kay: "Call",
+              value: 20
+            },
+            {
+              kay: "Email",
+              value: 29
+            }
+          ]
+        },
+        {
+          name: "Nui",
+          items: [
+            {
+              kay: "Call",
+              value: 30
+            },
+            {
+              kay: "Email",
+              value: 35
+            }
+          ]
+        }
+      ]
+    };
+  },
+  methods: {
+    download() {
+      /*Get image of canvas element*/
+      const url_base64jp =
+        //document
+        //.getElementById("graph")
+        this.$refs.graph.toDataURL("image/jpg");
+      /*get download button (tag: <a></a>) */
+      let a = document.getElementById("download");
+      /*insert chart image url to download button (tag: <a></a>) */
+      a.href = url_base64jp;
+    }
   }
 };
 </script>
@@ -128,5 +175,11 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+a {
+  color: red;
+  width: 100px;
+  height: 30px;
 }
 </style>
